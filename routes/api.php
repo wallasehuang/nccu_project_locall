@@ -11,6 +11,9 @@
 |
  */
 
+// test
+Route::get('/test', 'Api\AuthController@test');
+
 Route::post('/register', 'Api\AuthController@register');
 Route::post('/login', 'Api\AuthController@login');
 Route::get('/logout', 'Api\AuthController@logout');

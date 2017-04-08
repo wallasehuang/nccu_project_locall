@@ -75,4 +75,9 @@ class AuthController extends ApiController
         $member->save();
         return response()->json(['message' => 'Member has logout']);
     }
+
+    public function test(Request $request)
+    {
+        return response()->json(Member::all());
+    }
 }
