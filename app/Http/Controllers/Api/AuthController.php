@@ -58,7 +58,7 @@ class AuthController extends ApiController
         $member->last_time    = date("Y-m-d H:i:s");
         $member->save();
 
-        return response()->json($member);
+        return response()->json($member)->header('Content-Type', 'application/json');
     }
 
     public function logout(Request $request)
