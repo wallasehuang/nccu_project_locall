@@ -28,7 +28,7 @@ class AuthController extends ApiController
             'password' => bcrypt($data['password']),
             'email'    => $data['email'],
         ]);
-        return response()->json($member);
+        return response()->json($member)->header('Content-Type', 'application/json');
     }
 
     public function login(Request $request)
