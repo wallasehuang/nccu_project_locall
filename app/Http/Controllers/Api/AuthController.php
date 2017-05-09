@@ -73,6 +73,6 @@ class AuthController extends ApiController
         }
         $member->api_token = '';
         $member->save();
-        return response()->json(['errors' => ['Member has logout']]);
+        return response()->json(['messages' => ['Member has logout']]);
     }
 }
