@@ -20,7 +20,7 @@ class AuthController extends ApiController
         ];
         $validator = Validator::make($data, $rules);
         if ($validator->fails()) {
-            return response()->json($validator->errors());
+            return response()->json(['errors' => $validator->errors()->all()]);
         }
 
         $member = Member::create([
@@ -28,7 +28,7 @@ class AuthController extends ApiController
             'password' => bcrypt($data['password']),
             'email'    => $data['email'],
         ]);
-        return response()->json($member)->header('Content-Type', 'application/json');
+        return response()->json($member);
     }
 
     public function login(Request $request)
@@ -41,7 +41,7 @@ class AuthController extends ApiController
         ];
         $validator = Validator::make($data, $rules);
         if ($validator->fails()) {
-            return response()->json($validator->errors());
+            return response()->json(['errors' => $validator->errors()->all()]);
         }
 
         $attempt = Auth::attempt([
@@ -49,7 +49,7 @@ class AuthController extends ApiController
             'password' => $data['password'],
         ]);
         if (!$attempt) {
-            return response()->json(['error' => 'Account or password is wrong!']);
+            return response()->json(['errors' => ['Account or password is wrong!']]);
         }
         $member = Auth::guard('api')->user();
 
@@ -65,19 +65,14 @@ class AuthController extends ApiController
     {
         $api_token = $request->header('Authorization');
         if (!$api_token) {
-            return response()->json(['error' => 'No Authorization']);
+            return response()->json(['errors' => ['No Authorization']]);
         }
         $member = Member::where('api_token', $api_token)->first();
         if (!$member) {
-            return response()->json(['message' => 'Member has logout']);
+            return response()->json(['errors' => ['Member has logout']]);
         }
         $member->api_token = '';
         $member->save();
-        return response()->json(['message' => 'Member has logout']);
-    }
-
-    public function test(Request $request)
-    {
-        return response()->json(Member::all());
+        return response()->json(['errors' => ['Member has logout']]);
     }
 }
