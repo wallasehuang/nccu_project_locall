@@ -65,14 +65,14 @@ class AuthController extends ApiController
     {
         $api_token = $request->header('Authorization');
         if (!$api_token) {
-            return response()->json(['errors' => ['No Authorization']]);
+            return response()->json(['error' => 'No Authorization']);
         }
         $member = Member::where('api_token', $api_token)->first();
         if (!$member) {
-            return response()->json(['errors' => ['Member has logout']]);
+            return response()->json(['error' => 'Member has logout']);
         }
         $member->api_token = '';
         $member->save();
-        return response()->json(['messages' => ['Member has logout']]);
+        return response()->json(['message' => 'Member has logout']);
     }
 }

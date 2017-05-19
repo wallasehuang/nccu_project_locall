@@ -18,14 +18,14 @@ class MemberController extends ApiController
         $account = $request->input('account', null);
         $self    = $access->member;
         if (!$account) {
-            return response()->json(['error' => 'No member\'s account']);
+            return response()->json(['errors' => ['No member\'s account']]);
         }
         if ($self->account == $account) {
-            return response()->json(['message' => 'This account is yourself']);
+            return response()->json(['errors' => ['This account is yourself']]);
         }
         $member = Member::where('account', $account)->first();
         if (!$member) {
-            return response()->json(['error' => 'Can\'t find this account']);
+            return response()->json(['errors' => ['Can\'t find this account']]);
         }
         return response()->json($member);
     }
