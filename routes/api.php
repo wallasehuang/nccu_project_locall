@@ -17,11 +17,12 @@ Route::get('/logout', 'Api\AuthController@logout');
 
 Route::post('/member/account', 'Api\MemberController@memberByAccount');
 
-Route::post('/friend/invite', 'Api\FriendController@invite');
 Route::post('/friend/list', 'Api\FriendController@friends');
 Route::post('/friend/listByInviter', 'Api\FriendController@friendsOfInviter');
 Route::post('/friend/listByInvitee', 'Api\FriendController@friendsOfInvitee');
+Route::post('/friend/invite', 'Api\FriendController@invite');
 Route::post('/friend/accept', 'Api\FriendController@accept');
+Route::post('/friend/checkFriendShip', 'Api\FriendController@checkFriendShip');
 
 Route::post('/message/send', 'Api\MessageController@send');
 Route::post('/message/list', 'Api\MessageController@message');

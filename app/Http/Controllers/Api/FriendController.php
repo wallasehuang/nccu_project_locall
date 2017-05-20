@@ -78,4 +78,41 @@ class FriendController extends ApiController
 
     }
 
+    public function checkFriendShip(Request $request, AccessToken $access)
+    {
+        /*
+         *    status = [
+         *       1 => "還未送出邀請"
+         *       2 => "已送出邀請"
+         *       3 => "等待接受中"
+         *       4 => "已是好友"
+         *       0 => "錯誤"
+         *   ]
+         */
+        $account = $request->input('account', null);
+        $member  = Member::where('account', $account)->first();
+        $self    = $access->member;
+
+        $is_friend = $self->friends->where('account', $account)
+            ->where('pivot.status', 2)->first();
+        if ($is_friend) {
+            return response()->json(['status' => 4]);
+        }
+
+        $is_waitAccept = $self->friendsOfInvitee->where('account', $account)
+            ->where('pivot.status', 1)->first();
+        if ($is_waitAccept) {
+            return response()->json(['status' => 3]);
+        }
+
+        $is_sendInvit = $self->friendsOfInviter->where('account', $account)
+            ->where('pivot.status', 1)->first();
+        if ($is_sendInvit) {
+            return response()->json(['status' => 2]);
+        }
+
+        return response()->json(['status' => 1]);
+
+    }
+
 }
