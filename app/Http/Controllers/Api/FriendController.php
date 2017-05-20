@@ -15,8 +15,18 @@ class FriendController extends ApiController
 
     public function friends(Request $request, AccessToken $access)
     {
-        $self = $access->member;
-        return response()->json($self->friends->where('pivot.status', 2));
+        $self    = $access->member;
+        $friends = collect();
+        foreach ($self->friends->where('pivot.status', 2) as $friend) {
+            $data = [
+                'id'           => $friend->id,
+                'account'      => $friend->account,
+                'email'        => $friend->email,
+                'device_token' => $friend->device_token,
+            ];
+            $friends->push($data);
+        }
+        return response()->json($friends);
     }
 
     public function friendsOfInviter(Request $request, AccessToken $access)
