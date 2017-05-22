@@ -67,9 +67,9 @@ class FriendController extends ApiController
             ];
             $friends->push($data);
         }
-        if ($friends->count() == 0) {
-            return response()->json(null);
-        }
+        // if ($friends->count() == 0) {
+        //     return response()->json([]);
+        // }
         return response()->json($friends);
     }
 
