@@ -23,6 +23,7 @@ class FriendController extends ApiController
                 'account'      => $friend->account,
                 'email'        => $friend->email,
                 'device_token' => $friend->device_token,
+                'type'         => 1,
             ];
             $friends->push($data);
         }
@@ -31,14 +32,36 @@ class FriendController extends ApiController
 
     public function friendsOfInviter(Request $request, AccessToken $access)
     {
-        $self = $access->member;
-        return response()->json($self->friendsOfInviter->where('pivot.status', 1));
+        $self    = $access->member;
+        $friends = collect();
+        foreach ($self->friendsOfInviter->where('pivot.status', 1) as $friend) {
+            $data = [
+                'id'           => $friend->id,
+                'account'      => $friend->account,
+                'email'        => $friend->email,
+                'device_token' => $friend->device_token,
+                'type'         => 2,
+            ];
+            $friends->push($data);
+        }
+        return response()->json($friends);
     }
 
     public function friendsOfInvitee(Request $request, AccessToken $access)
     {
-        $self = $access->member;
-        return response()->json($self->friendsOfInvitee->where('pivot.status', 1));
+        $self    = $access->member;
+        $friends = collect();
+        foreach ($self->friendsOfInvitee->where('pivot.status', 1) as $friend) {
+            $data = [
+                'id'           => $friend->id,
+                'account'      => $friend->account,
+                'email'        => $friend->email,
+                'device_token' => $friend->device_token,
+                'type'         => 3,
+            ];
+            $friends->push($data);
+        }
+        return response()->json($friends);
     }
 
     public function invite(Request $request, AccessToken $access)
