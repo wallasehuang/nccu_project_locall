@@ -21,7 +21,15 @@ class MessageController extends ApiController
         $self   = $access->member;
         $result = collect();
         foreach ($self->reciver->where('status', 1) as $reciver) {
-            $result->push($reciver->message);
+            $data = [
+                'id'        => $reciver->message->id,
+                'sender'    => $reciver->message->senderModel->account,
+                'send_time' => $reciver->message->send_time,
+                'latitude'  => $reciver->message->latitude,
+                'longitude' => $reciver->message->longitude,
+                'message'   => $reciver->message->message,
+            ];
+            $result->push($data);
         }
         return response()->json($result);
     }

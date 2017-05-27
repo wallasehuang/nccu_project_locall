@@ -11,7 +11,7 @@ class Message extends Model
     protected $fillable = ['id', 'sender', 'send_time', 'latitude', 'longitude', 'message', 'status'];
 
     // relation of sender
-    public function sender()
+    public function senderModel()
     {
         return $this->belongsTo('App\Member', 'sender', 'id');
     }
