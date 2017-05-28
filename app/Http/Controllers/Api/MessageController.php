@@ -67,7 +67,8 @@ class MessageController extends ApiController
             return response()->json(['error' => $e]);
         }
 
-        return response()->json($message->with('reciver')->where('id', $message->id)->get());
+        return response()->json(['message' => 'success send message!']);
+        // return response()->json($message->with('reciver')->where('id', $message->id)->get());
 
     }
 
