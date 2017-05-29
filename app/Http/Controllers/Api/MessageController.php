@@ -108,6 +108,15 @@ class MessageController extends ApiController
 
         $is_message->status = 2;
         $is_message->save();
-        return response()->json($message);
+
+        $data = [
+            'id'        => $message->id,
+            'sender'    => $message->senderModel->account,
+            'send_time' => $message->send_time,
+            'latitude'  => $message->latitude,
+            'longitude' => $message->longitude,
+            'message'   => $message->message,
+        ];
+        return response()->json($data);
     }
 }
