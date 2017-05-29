@@ -103,7 +103,8 @@ class MessageController extends ApiController
         $distance       = 2 * asin(sqrt(pow(sin($a / 2), 2) + cos($radLatMessage) * cos($radLatSelf) * pow(sin($b / 2), 2))) * 6378137;
 
         if ($distance > 5) {
-            return response()->json(['message' => 'You are too far away from that message!']);
+            // You are too far away from that message!
+            return response()->json(['status' => 1]);
         }
 
         $is_message->status = 2;
@@ -116,6 +117,7 @@ class MessageController extends ApiController
             'latitude'  => $message->latitude,
             'longitude' => $message->longitude,
             'message'   => $message->message,
+            'status'    => 2,
         ];
         return response()->json($data);
     }
