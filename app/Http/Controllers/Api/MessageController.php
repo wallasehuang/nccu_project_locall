@@ -102,7 +102,7 @@ class MessageController extends ApiController
         $b              = $radLongMessage - $radLongSelf;
         $distance       = 2 * asin(sqrt(pow(sin($a / 2), 2) + cos($radLatMessage) * cos($radLatSelf) * pow(sin($b / 2), 2))) * 6378137;
 
-        if ($distance > 5) {
+        if ($distance > 10) {
             // You are too far away from that message!
             return response()->json(['status' => 1]);
         }
