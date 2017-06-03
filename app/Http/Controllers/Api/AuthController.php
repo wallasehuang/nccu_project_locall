@@ -71,7 +71,7 @@ class AuthController extends ApiController
         if (!$member) {
             return response()->json(['error' => 'Member has logout']);
         }
-        $member->api_token = '';
+        $member->api_token = null;
         $member->save();
         return response()->json(['message' => 'Member has logout']);
     }
